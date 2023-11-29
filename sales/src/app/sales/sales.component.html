@@ -1,0 +1,61 @@
+<!-- app.component.html -->
+<div class="container text-center mt-2">
+    <div class="row">
+        <div class="col">
+            <p-multiSelect [options]="categories" [(ngModel)]="selectedCategory" (onChange)="filter()"></p-multiSelect>
+        </div>
+        <div class="col">
+            <p-calendar [(ngModel)]="dateIni"></p-calendar>
+        </div>
+        <div class="col">
+            <p-calendar [(ngModel)]="dateEnd"></p-calendar>
+        </div>
+        <div class="col">
+            <button (click)="filter()">Obtener Valores Seleccionados</button>
+        </div>
+    </div>
+    <div>
+
+        <p-table 
+        [value]="sales"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Cliente</th>
+                    <th>Pais</th>
+                    <th>Proveedor</th>
+                    <th>Categoria</th>
+                    <th>Variedad</th>
+                    <th>Color</th>
+                    <th *ngFor="let date of salesGroupedByDate | keyvalue">{{ date.key }}</th>
+                    <th>Total</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-sale>
+                <tr>
+                    <td>{{ sale.customer }}</td>
+                    <td>{{ sale.country }}</td>
+                    <td>{{ sale.provider }}</td>
+                    <td>{{ sale.category }}</td>
+                    <td>{{ sale.variety }}</td>
+                    <td>{{ sale.color }}</td>
+                    <td *ngFor="let date of salesGroupedByDate | keyvalue">{{ sale.stems }}</td>
+                    <td> {{ calcularTotalColumna('stems') }}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <tr>
+                  <td>Total</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>{{ calcularTotalColumna('stems') }}</td>
+                </tr>
+              </ng-template>
+        </p-table>
+    </div>
+</div>
